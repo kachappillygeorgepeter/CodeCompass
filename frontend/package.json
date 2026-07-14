@@ -1,0 +1,9 @@
+{
+  "name": "code-compass-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser extension frontend for Code Compass",
+  "scripts": {
+    "lint": "echo \"No frontend build step configured\""
+  }
+}

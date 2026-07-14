@@ -1,0 +1,43 @@
+.code-compass-fab {
+  position: absolute;
+  z-index: 2147483647;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+}
+
+.code-compass-popup {
+  position: absolute;
+  z-index: 2147483647;
+  max-width: 320px;
+  padding: 12px 36px 12px 12px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.code-compass-popup-shell {
+  position: relative;
+}
+
+.code-compass-popup__content {
+  white-space: pre-wrap;
+}
+
+.code-compass-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  color: #6b7280;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
