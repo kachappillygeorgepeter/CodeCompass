@@ -7,6 +7,10 @@ let popupCard = null;
 document.addEventListener("mouseup", handleSelection);
 
 function handleSelection(event) {
+  if (event.target instanceof Element && event.target.closest(".code-compass-fab")) {
+    return;
+  }
+
   const selectedText = window.getSelection().toString().trim();
 
   removeFloatingButton();
@@ -19,7 +23,12 @@ function handleSelection(event) {
   floatingButton.style.top = `${event.pageY + 10}px`;
   floatingButton.style.left = `${event.pageX + 10}px`;
 
-  floatingButton.addEventListener("click", () => requestExplanation(selectedText, event));
+  floatingButton.addEventListener("mousedown", (e) => e.stopPropagation());
+  floatingButton.addEventListener("mouseup", (e) => e.stopPropagation());
+  floatingButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    requestExplanation(selectedText, event);
+  });
 
   document.body.appendChild(floatingButton);
 }
