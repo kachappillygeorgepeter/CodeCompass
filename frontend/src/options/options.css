@@ -1,11 +1,55 @@
 body {
-  font-family: sans-serif;
-  width: 220px;
-  padding: 12px;
+  margin: 0;
+  width: 260px;
+  min-height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+  font-family: Inter, "Segoe UI", Roboto, sans-serif;
+  background: #07111f;
+  color: #f8fafc;
+}
+
+.settings-card {
+  background: #111827;
+  border: 1px solid #23324a;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+h3 {
+  margin: 0 0 12px;
+  color: #8b5cf6;
+  font-size: 18px;
+  letter-spacing: 0.02em;
 }
 
 label {
   display: block;
-  margin-bottom: 8px;
   font-size: 13px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+select {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #0f172a;
+  color: #f8fafc;
+  outline: none;
+  box-sizing: border-box;
+}
+
+select:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25);
+}
+
+select option {
+  background: #0f172a;
+  color: #f8fafc;
 }
