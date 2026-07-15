@@ -1,8 +1,12 @@
+/*This file defines the popup UI for the Code Compass extension. 
+It creates a popup card that displays the explanation of the selected code snippet.
+The popup can be shown and removed using the provided functions.*/
 (function () {
   let popupCard = null;
   let popupContent = null;
   let closeButton = null;
 
+// Function to show the popup with the given content at the specified event location
   async function showPopup(content, event) {
     removePopup();
 
@@ -28,7 +32,7 @@
 
     document.body.appendChild(popupCard);
   }
-
+// Funciton to remove the popup
   function removePopup() {
     if (popupCard) {
       popupCard.remove();

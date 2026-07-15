@@ -1,9 +1,9 @@
-// Wraps all calls to the AI backend. Never call the AI provider directly
-// with a hardcoded key here — route through your backend proxy instead
-// (see /backend). This keeps your API key out of the published extension.
+/* This file contains the API client for interacting with the AI backend.*/
 
-const BACKEND_URL = "https://your-backend-proxy.example.workers.dev/explain";
+const BACKEND_URL = ""; // 
+export const DEFAULT_VERBOSITY = "beginner";
 
+// Function to send code to the backend for explanation and receive the explanation in return.
 export async function explainCode(code) {
   const response = await fetch(BACKEND_URL, {
     method: "POST",

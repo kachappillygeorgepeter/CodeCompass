@@ -1,11 +1,14 @@
+/*Background Color: #FFEED6  rgb(255, 238, 214)
+ Text & Details: #5B8246 rgb(91, 130, 70)
+*/
 .code-compass-fab {
   position: absolute;
-  z-index: 2147483647;
+  z-index: 2147483647; /*32 bit signeed integer max value*/
   border: none;
   border-radius: 999px;
   padding: 8px 12px;
-  background: #2563eb;
-  color: white;
+  background: rgba(255, 238, 214, 0.75);
+  color: #5B8246;
   cursor: pointer;
   font: inherit;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
@@ -17,7 +20,7 @@
   z-index: 2147483647;
   max-width: 320px;
   padding: 12px 36px 12px 12px;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid #d1d5db;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -38,7 +41,7 @@
   top: 8px;
   right: 8px;
   cursor: pointer;
-  color: #6b7280;
+  color: #000000;
   border: none;
   background: transparent;
   padding: 0;
