@@ -7,42 +7,67 @@
   border: none;
   border-radius: 999px;
   padding: 8px 12px;
-  background: rgba(255, 238, 214, 0.75);
-  color: #5B8246;
+  background: linear-gradient(135deg, #fff3d8 0%, #f8dba8 100%);
+  color: #6b7d3f;
   cursor: pointer;
   font: inherit;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 8px 18px rgba(114, 86, 38, 0.2);
   user-select: none;
 }
 
 .code-compass-popup {
-  position: absolute;
+  position: fixed;
   z-index: 2147483647;
   max-width: 320px;
-  padding: 12px 36px 12px 12px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 14px 14px 12px 14px;
+  background: linear-gradient(135deg, #fffaf1 0%, #ffe8c6 100%);
+  color: #5b3f24;
+  border: 1px solid #e7c08a;
+  border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(109, 76, 29, 0.18);
   font-size: 14px;
   line-height: 1.5;
+  cursor: move;
+  user-select: none;
+  overflow: visible;
+  margin: 0;
+}
+
+.code-compass-popup.is-dragging {
+  cursor: grabbing;
 }
 
 .code-compass-popup-shell {
   position: relative;
+  overflow: visible;
+  padding-top: 4px;
 }
 
 .code-compass-popup__content {
   white-space: pre-wrap;
+  color: #5b3f24;
 }
 
 .code-compass-close {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: -12px;
+  right: -12px;
   cursor: pointer;
-  color: #000000;
+  color: #8b4a1a;
   border: none;
-  background: transparent;
+  background: linear-gradient(135deg, #fff7eb 0%, #f3d8a8 100%);
   padding: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(109, 76, 29, 0.15);
+  z-index: 2147483648;
+}
+
+.code-compass-close:hover {
+  background: linear-gradient(135deg, #ffe4b8 0%, #e9bf74 100%);
 }

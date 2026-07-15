@@ -4,13 +4,18 @@
 // These variables are used to keep track of the floating button and popup card elements.
 let floatingButton = null;
 let popupCard = null;
+let activeRequestId = 0;
 
 document.addEventListener("mouseup", handleSelection);
+window.addEventListener("code-compass:popup-closed", () => {
+  activeRequestId += 1;
+  removeFloatingButton();
+});
 
 // This function is called when the user highlights text on the page. It checks if the highlighted text is valid and creates a floating "Explain" button near the selection.
 // When the button is clicked, it sends a message to the background script to request an explanation for the selected code snippet.
 function handleSelection(event) {
-  if (event.target instanceof Element && event.target.closest(".code-compass-fab")) {
+  if (event.target instanceof Element && (event.target.closest(".code-compass-fab") || event.target.closest(".code-compass-popup"))) {
     return;
   }
 // Get the selected text and trim any whitespace. If the selection is empty or too short, remove the floating button and return.
@@ -36,11 +41,17 @@ function handleSelection(event) {
 }
 // Function to request an explanation for the selected code snippet. It removes the floating button, shows a "Thinking..." popup, and sends a message to the background script to request an explanation. When the response is received, it updates the popup with the explanation or an error message.
 function requestExplanation(code, event) {
+  const requestId = Date.now();
+  activeRequestId = requestId;
   removeFloatingButton();
-  window.CodeExplainerPopupUI.showPopup("Thinking...", event);
+  window.CodeExplainerPopupUI.removePopup();
   chrome.runtime.sendMessage(
     { type: "EXPLAIN_CODE", payload: { code } },
     (response) => {
+      if (requestId !== activeRequestId) {
+        return;
+      }
+
       if (chrome.runtime.lastError || !response || response.error) {
         window.CodeExplainerPopupUI.showPopup("Sorry, something went wrong. Please try again.", event);
         return;
