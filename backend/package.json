@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Backend proxy for Code Compass",
+  "description": "Backend for Code Compass",
   "scripts": {
     "start": "node index.js"
   }
