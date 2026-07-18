@@ -5,21 +5,21 @@ body {
   padding: 16px;
   box-sizing: border-box;
   font-family: Inter, "Segoe UI", Roboto, sans-serif;
-  background: #07111f;
-  color: #f8fafc;
+  background: linear-gradient(180deg, #00111c 0%, #1b3a4b 100%);
+  color: #ffffff;
 }
 
 .settings-card {
-  background: #111827;
-  border: 1px solid #23324a;
+  background: rgba(27, 58, 75, 0.95);
+  border: 1px solid rgba(0, 100, 102, 0.45);
   border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 28px rgba(0, 17, 28, 0.35);
 }
 
 h3 {
   margin: 0 0 12px;
-  color: #8b5cf6;
+  color: #006466;
   font-size: 18px;
   letter-spacing: 0.02em;
 }
@@ -28,7 +28,7 @@ label {
   display: block;
   font-size: 13px;
   font-weight: 600;
-  color: #cbd5e1;
+  color: #e8f7f8;
 }
 
 select {
@@ -36,20 +36,20 @@ select {
   width: 100%;
   margin-top: 8px;
   padding: 8px 10px;
-  border: 1px solid #334155;
+  border: 1px solid #006466;
   border-radius: 8px;
-  background: #0f172a;
-  color: #f8fafc;
+  background: #00111c;
+  color: #ffffff;
   outline: none;
   box-sizing: border-box;
 }
 
 select:focus {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25);
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 100, 102, 0.25);
 }
 
 select option {
-  background: #0f172a;
-  color: #f8fafc;
+  background: #00111c;
+  color: #ffffff;
 }

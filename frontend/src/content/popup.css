@@ -1,21 +1,22 @@
-/* Dark popup theme with solid colors and no gradients */
 .code-compass-fab {
   position: absolute;
   z-index: 2147483647;
-  border: 1px solid #3b4a63;
+  border: 1px solid #00111c;
   border-radius: 999px;
   padding: 8px 12px;
-  background: #111827;
-  color: #f8fafc;
+  background: #00111c;
+  color: #ffffff;
   cursor: pointer;
   font: inherit;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32);
+  box-shadow: 0 8px 20px rgba(0, 17, 28, 0.28);
   user-select: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .code-compass-fab:hover {
-  background: #1f2937;
-  border-color: #8b5cf6;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 17, 28, 0.35);
+  background: #1b3a4b;
 }
 
 .code-compass-popup {
@@ -23,11 +24,12 @@
   z-index: 2147483647;
   max-width: 320px;
   padding: 14px 14px 12px 14px;
-  background: #111827;
-  color: #e5e7eb;
-  border: 1px solid #23324a;
+  touch-action: none;
+  background: linear-gradient(145deg, #00111c 0%, #1b3a4b 100%);
+  color: #ffffff;
+  border: 1px solid rgba(0, 100, 102, 0.45);
   border-radius: 16px;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38);
+  box-shadow: 0 16px 38px rgba(0, 17, 28, 0.4);
   font-size: 14px;
   line-height: 1.5;
   cursor: move;
@@ -48,7 +50,7 @@
 
 .code-compass-popup__content {
   white-space: pre-wrap;
-  color: #e5e7eb;
+  color: #ffffff;
 }
 
 .code-compass-close {
@@ -56,9 +58,9 @@
   top: -12px;
   right: -12px;
   cursor: pointer;
-  color: #f8fafc;
-  border: 1px solid #3b4a63;
-  background: #1f2937;
+  color: #ffffff;
+  border: 1px solid #006466;
+  background: #00111c;
   padding: 0;
   width: 28px;
   height: 28px;
@@ -67,11 +69,12 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 4px 12px rgba(0, 17, 28, 0.28);
   z-index: 2147483648;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .code-compass-close:hover {
-  background: #2d3748;
-  border-color: #8b5cf6;
+  background: #006466;
+  border-color: #ffffff;
 }

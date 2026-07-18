@@ -51,14 +51,14 @@ The popup can be shown and removed using the provided functions.*/
       document.body.style.userSelect = "";
     };
 
-    card.addEventListener("mousedown", startDrag);
-    document.addEventListener("mousemove", moveDrag);
-    document.addEventListener("mouseup", stopDrag);
+    card.addEventListener("pointerdown", startDrag);
+    document.addEventListener("pointermove", moveDrag);
+    document.addEventListener("pointerup", stopDrag);
 
     card.__dragCleanup = () => {
-      card.removeEventListener("mousedown", startDrag);
-      document.removeEventListener("mousemove", moveDrag);
-      document.removeEventListener("mouseup", stopDrag);
+      card.removeEventListener("pointerdown", startDrag);
+      document.removeEventListener("pointermove", moveDrag);
+      document.removeEventListener("pointerup", stopDrag);
       document.body.style.userSelect = "";
     };
   }
