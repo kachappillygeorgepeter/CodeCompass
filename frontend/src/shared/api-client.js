@@ -1,6 +1,6 @@
 /* This file contains the API client for interacting with the AI backend.*/
 
-const BACKEND_URL = ""; // 
+const BACKEND_URL = "https://code-compass-tau-roan.vercel.app/";
 export const DEFAULT_VERBOSITY = "beginner";
 
 // Function to send code to the backend for explanation and receive the explanation in return.

@@ -23,24 +23,39 @@ export default {
       });
     }
 //Send a POST request to the API with the code snippet in the request body. Wait for the response and parse it as JSON. Extract the explanation from the response data. If no explanation is available, set a default message.
-    const aiResponse = await fetch("", {
+    const aiApiUrl = env.AI_API?.trim();
+    const aiModel = env.AI_MODEL?.trim();
+
+    if (!aiApiUrl) {
+      return new Response(JSON.stringify({ error: "AI API endpoint is not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const headers = { "Content-Type": "application/json" };
+    if (env.AI_API_KEY?.trim()) {
+      headers["x-goog-api-key"] = env.AI_API_KEY.trim();
+    }
+
+    const aiResponse = await fetch(aiApiUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": env.AI_API_KEY,
-      },
+      headers,
       body: JSON.stringify({
-        model: "",
-        messages: [
+        contents: [
           {
-            role: "user",
-            content: `Explain this code snippet in plain English, step by step:\n\n${code}`,
+            parts: [
+              {
+                text: `Explain this code snippet in plain English, step by step:\n\n${code}`,
+              },
+            ],
           },
         ],
       }),
     });
+
     const data = await aiResponse.json();
-    const explanation = data.content?.[0]?.text ?? "No explanation available.";
+    const explanation = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "No explanation available.";
 
     return new Response(JSON.stringify({ explanation }), {
       headers: { "Content-Type": "application/json" },
