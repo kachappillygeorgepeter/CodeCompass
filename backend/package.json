@@ -2,9 +2,5 @@
   "name": "code-compass-backend",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
-  "description": "Backend for Code Compass",
-  "scripts": {
-    "start": "node index.js"
-  }
+  "type": "module"
 }

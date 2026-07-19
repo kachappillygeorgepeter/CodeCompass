@@ -1,4 +1,3 @@
-// It handles the selection of the explanation style (Beginner or Expert) and saves the user's preference to Chrome's local storage.
 const verbositySelect = document.getElementById("verbosity");
 
 chrome.storage.local.get(["verbosity"], (result) => {

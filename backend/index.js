@@ -1,64 +1,59 @@
 /*Deals with the backend logic of the application. It handles incoming requests, processes them and returns appropriate responses.
 This file is responsible for communicating with the AI API to get explanations for code snippets provided by users.
-It ensures that the requests are valid and that the responses are formatted correctly before sending them back to the client.*/
+Deployed as a Vercel serverless function.*/
 
+export default async function handler(req, res) {
+  // CORS headers so the Chrome extension can call this endpoint
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
+  // Handle preflight OPTIONS request
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
 
-// This  is a Cloudflare Worker that takes a code snippet from the request body, sends it to the API for explanation and returns the explanation in the response.
-// The function is exported so that it can be used by other files.
-//It ensures that the request method is POST and that the code snippet is valid before sending it to the API. If the request method is not POST or the code snippet is invalid, it returns an error response.
-export default {
-  async fetch(request, env) {
-    if (request.method !== "POST") {
-      return new Response("Method not allowed", { status: 405 });
-    }
-//Read the JSON body from the request. Wait until it's available. Extract the code property into a variable named code.
-    const { code } = await request.json();
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
-//Checking code size
-    if (!code || code.length > 5000) {
-      return new Response(JSON.stringify({ error: "Invalid snippet" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-//Send a POST request to the API with the code snippet in the request body. Wait for the response and parse it as JSON. Extract the explanation from the response data. If no explanation is available, set a default message.
-    const aiApiUrl = env.AI_API?.trim();
-    const aiModel = env.AI_MODEL?.trim();
+  const { code } = req.body;
 
-    if (!aiApiUrl) {
-      return new Response(JSON.stringify({ error: "AI API endpoint is not configured" }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
+  // Checking code size
+  if (!code || code.length > 5000) {
+    return res.status(400).json({ error: "Invalid snippet" });
+  }
 
-    const headers = { "Content-Type": "application/json" };
-    if (env.AI_API_KEY?.trim()) {
-      headers["x-goog-api-key"] = env.AI_API_KEY.trim();
-    }
+  const aiApiUrl = process.env.AI_API?.trim();
+  const aiApiKey = process.env.AI_API_KEY?.trim();
 
-    const aiResponse = await fetch(aiApiUrl, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text: `Explain this code snippet in plain English, step by step:\n\n${code}`,
-              },
-            ],
-          },
-        ],
-      }),
-    });
+  if (!aiApiUrl) {
+    return res.status(500).json({ error: "AI API endpoint is not configured" });
+  }
 
-    const data = await aiResponse.json();
-    const explanation = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "No explanation available.";
+  const headers = { "Content-Type": "application/json" };
+  if (aiApiKey) {
+    headers["x-goog-api-key"] = aiApiKey;
+  }
 
-    return new Response(JSON.stringify({ explanation }), {
-      headers: { "Content-Type": "application/json" },
-    });
-  },
-};
+  const aiResponse = await fetch(aiApiUrl, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      contents: [
+        {
+          parts: [
+            {
+              text: `Explain this code snippet in plain English, step by step:\n\n${code}`,
+            },
+          ],
+        },
+      ],
+    }),
+  });
+
+  const data = await aiResponse.json();
+  const explanation = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "No explanation available.";
+
+  return res.status(200).json({ explanation });
+}

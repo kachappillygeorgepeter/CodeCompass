@@ -1,6 +1,4 @@
-/*This file defines the popup UI for the Code Compass extension. 
-It creates a popup card that displays the explanation of the selected code snippet.
-The popup can be shown and removed using the provided functions.*/
+/*This file defines the popup UI for the Code Compass extension.*/
 (function () {
   let popupCard = null;
   let popupContent = null;
@@ -15,10 +13,7 @@ The popup can be shown and removed using the provided functions.*/
     let startTop = 0;
 
     const startDrag = (event) => {
-      if (event.target.closest(".code-compass-close")) {
-        return;
-      }
-
+      if (event.target.closest(".code-compass-close")) return;
       isDragging = true;
       card.classList.add("is-dragging");
       const rect = card.getBoundingClientRect();
@@ -31,10 +26,7 @@ The popup can be shown and removed using the provided functions.*/
     };
 
     const moveDrag = (event) => {
-      if (!isDragging) {
-        return;
-      }
-
+      if (!isDragging) return;
       const nextLeft = Math.max(0, startLeft + (event.clientX - startX));
       const nextTop = Math.max(0, startTop + (event.clientY - startY));
       card.style.left = `${nextLeft}px`;
@@ -42,10 +34,7 @@ The popup can be shown and removed using the provided functions.*/
     };
 
     const stopDrag = () => {
-      if (!isDragging) {
-        return;
-      }
-
+      if (!isDragging) return;
       isDragging = false;
       card.classList.remove("is-dragging");
       document.body.style.userSelect = "";
@@ -63,7 +52,6 @@ The popup can be shown and removed using the provided functions.*/
     };
   }
 
-// Function to show the popup with the given content at the specified event location
   async function showPopup(content, event) {
     removePopup();
 
@@ -93,7 +81,7 @@ The popup can be shown and removed using the provided functions.*/
     attachDragBehavior(popupCard);
     document.body.appendChild(popupCard);
   }
-// Funciton to remove the popup
+
   function removePopup({ canceled = false } = {}) {
     activeRequestId += 1;
 
