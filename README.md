@@ -6,11 +6,11 @@ Code Compass is a lightweight browser extension that helps you understand highli
 
 ```
 code-compass/
-├── backend/          ← Vercel serverless function (deploy this to Vercel)
+├── backend/          ← Vercel serverless function
 │   ├── index.js
 │   ├── package.json
 │   └── vercel.json
-└── frontend/         ← Chrome extension (load unpacked in Chrome)
+└── frontend/         ← Chrome extension
     ├── manifest.json
     ├── icons/
     └── src/
@@ -23,6 +23,7 @@ code-compass/
 ## Deployment Steps
 
 ### 1. Deploy the Backend to Vercel
+
 1. Push this repo to GitHub
 2. Go to vercel.com → Add Project → import your repo
 3. Set **Root Directory** to `backend`
@@ -32,9 +33,11 @@ code-compass/
 5. Deploy and copy your Vercel URL (e.g. `https://code-compass-backend.vercel.app/`)
 
 ### 2. Update the Frontend
+
 Open `frontend/src/shared/api-client.js` and replace the `BACKEND_URL` with your actual Vercel URL.
 
 ### 3. Load the Extension in Chrome
+
 1. Go to `chrome://extensions`
 2. Enable **Developer mode**
 3. Click **Load unpacked**
