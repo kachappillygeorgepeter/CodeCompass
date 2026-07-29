@@ -41,17 +41,50 @@ function requestExplanation(code, event) {
   activeRequestId = requestId;
   removeFloatingButton();
   window.CodeExplainerPopupUI.removePopup();
+
+  // Show a loading indicator immediately so the user knows a request is in flight
+  window.CodeExplainerPopupUI.showPopup("⏳ Analysing…", event);
+
+  // Safety net: if the service worker goes dormant and never replies, show a timeout
+  const timeoutId = setTimeout(() => {
+    if (requestId !== activeRequestId) return;
+    window.CodeExplainerPopupUI.showPopup(
+      "Request timed out. The service worker may have gone dormant — try again.",
+      event
+    );
+  }, 20000);
+
   chrome.runtime.sendMessage(
     { type: "EXPLAIN_CODE", payload: { code } },
     (response) => {
+      clearTimeout(timeoutId);
+
       if (requestId !== activeRequestId) {
         return;
       }
 
-      if (chrome.runtime.lastError || !response || response.error) {
-        window.CodeExplainerPopupUI.showPopup("Sorry, something went wrong. Please try again.", event);
+      // Surface the real error so it's visible in the popup (helps debugging)
+      if (chrome.runtime.lastError) {
+        window.CodeExplainerPopupUI.showPopup(
+          `Extension error: ${chrome.runtime.lastError.message}`,
+          event
+        );
         return;
       }
+
+      if (!response) {
+        window.CodeExplainerPopupUI.showPopup(
+          "No response from background service worker. Try reloading the extension.",
+          event
+        );
+        return;
+      }
+
+      if (response.error) {
+        window.CodeExplainerPopupUI.showPopup(`Error: ${response.error}`, event);
+        return;
+      }
+
       window.CodeExplainerPopupUI.showPopup(response.explanation, event);
     }
   );

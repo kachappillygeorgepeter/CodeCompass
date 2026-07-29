@@ -4,6 +4,7 @@
   let popupContent = null;
   let closeButton = null;
   let activeRequestId = 0;
+  let cachedTemplateHtml = null; // cache so we only fetch once
 
   function attachDragBehavior(card) {
     let isDragging = false;
@@ -53,16 +54,26 @@
   }
 
   async function showPopup(content, event) {
+    // If the popup already exists, just update the text — avoids a DOM rebuild race
+    // between the loading state and the final result state.
+    if (popupCard && popupContent) {
+      popupContent.textContent = content;
+      return;
+    }
+
     removePopup();
 
-    const template = await fetch(chrome.runtime.getURL("src/content/popup-ui.html"));
-    const html = await template.text();
+    // Fetch (and cache) the template HTML
+    if (!cachedTemplateHtml) {
+      const template = await fetch(chrome.runtime.getURL("src/content/popup-ui.html"));
+      cachedTemplateHtml = await template.text();
+    }
 
     popupCard = document.createElement("div");
     popupCard.className = "code-compass-popup";
     popupCard.style.top = `${event.clientY + 10}px`;
     popupCard.style.left = `${event.clientX + 10}px`;
-    popupCard.innerHTML = html;
+    popupCard.innerHTML = cachedTemplateHtml;
 
     popupContent = popupCard.querySelector(".code-compass-popup__content");
     closeButton = popupCard.querySelector(".code-compass-close");
