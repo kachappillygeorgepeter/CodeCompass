@@ -36,24 +36,43 @@ export default async function handler(req, res) {
     headers["x-goog-api-key"] = aiApiKey;
   }
 
-  const aiResponse = await fetch(aiApiUrl, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      contents: [
-        {
-          parts: [
-            {
-              text: `Explain this code snippet in plain English, step by step:\n\n${code}`,
-            },
-          ],
-        },
-      ],
-    }),
-  });
+  // Build a prompt that respects the verbosity level chosen in the extension options
+  const verbosity = req.body.verbosity ?? "beginner";
+  const audienceNote =
+    verbosity === "expert"
+      ? "Assume the reader is an experienced software engineer. Use technical terminology freely."
+      : "Assume the reader is a beginner programmer. Use simple language and avoid jargon.";
 
-  const data = await aiResponse.json();
-  const explanation = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "No explanation available.";
+  const prompt = `${audienceNote}\n\nExplain this code snippet in plain English, step by step:\n\n${code}`;
 
-  return res.status(200).json({ explanation });
+  try {
+    const aiResponse = await fetch(aiApiUrl, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [{ text: prompt }],
+          },
+        ],
+      }),
+    });
+
+    if (!aiResponse.ok) {
+      const errText = await aiResponse.text();
+      console.error("AI API returned non-OK status:", aiResponse.status, errText);
+      return res.status(502).json({
+        error: `AI API error (${aiResponse.status}): ${errText.slice(0, 200)}`,
+      });
+    }
+
+    const data = await aiResponse.json();
+    const explanation =
+      data.candidates?.[0]?.content?.parts?.[0]?.text ?? "No explanation available.";
+
+    return res.status(200).json({ explanation });
+  } catch (err) {
+    console.error("AI API request failed:", err);
+    return res.status(500).json({ error: "AI API request failed: " + err.message });
+  }
 }
