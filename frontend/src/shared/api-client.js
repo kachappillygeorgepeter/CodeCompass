@@ -1,7 +1,7 @@
 /* This file contains the API client for interacting with the AI backend.*/
 
-// TODO: Replace this URL with your actual Vercel deployment URL after deploying the backend
-const BACKEND_URL = "https://code-compass-psi.vercel.app/";
+// Backend is served from /api (Vercel auto-routes api/index.js → /api)
+const BACKEND_URL = "https://code-compass-psi.vercel.app/api";
 export const DEFAULT_VERBOSITY = "beginner";
 
 /** Reads the verbosity preference from chrome.storage (falls back to DEFAULT_VERBOSITY). */
