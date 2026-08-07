@@ -81,7 +81,8 @@ function requestExplanation(code, event) {
       }
 
       if (response.error) {
-        window.CodeExplainerPopupUI.showPopup(`Error: ${response.error}`, event);
+        console.error("Code Compass API Error:", response.error);
+        window.CodeExplainerPopupUI.showPopup("SERVER UNDER MAINTAINENCE", event);
         return;
       }
 
